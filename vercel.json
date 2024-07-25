@@ -1,0 +1,19 @@
+{
+  "build": {
+    "env": {
+      "DATABASE_URL": "mongodb+srv://syket:224722@cluster0.ng0htaz.mongodb.net/anytimep2p?retryWrites=true&w=majority"
+    }
+  },
+  "builds": [
+    {
+      "src": "api/**/*",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": ["prisma/**"]
+      }
+    }
+  ],
+  "hooks": {
+    "build": "npx prisma generate"
+  }
+}
