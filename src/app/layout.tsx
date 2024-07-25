@@ -3,6 +3,7 @@ import "./globals.css";
 import { Manrope } from "next/font/google";
 import Header from "@/components/universal/Header";
 import Footer from "@/components/universal/Footer";
+import AuthProvider from "@/components/providers/AuthProvider";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -14,11 +15,13 @@ export default function RootLayout({ children }: IProps) {
   return (
     <html lang="en" className={manrope.variable}>
       <head />
-      <body>
-        <Header />
-        <main>{children}</main>
-        <Footer />
-      </body>
+      <AuthProvider>
+        <body>
+          <Header />
+          <main>{children}</main>
+          <Footer />
+        </body>
+      </AuthProvider>
     </html>
   );
 }

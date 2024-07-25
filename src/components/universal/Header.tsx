@@ -5,24 +5,27 @@ import Link from "next/link";
 
 import useScrollPosition from "@/hooks/useScrollPosition";
 import Button from "./Button";
+import { signIn, signOut, useSession } from "next-auth/react";
 const HeaderMenu = lazy(() => import("./HeaderMenu"));
 
 export default function Header() {
+  const { data: session, status } = useSession();
+
   const PADDING_Y = 24;
   const [isOpen, setIsOpen] = useState(false);
   const scrollTop = useScrollPosition();
   const isSticky = scrollTop > PADDING_Y;
   const top = Math.max(0, PADDING_Y - scrollTop);
 
-  // const handleSignIn = () => {
-  //   signIn("google", {
-  //     redirect: false,
-  //   });
-  // };
+  const handleSignIn = () => {
+    signIn("google", {
+      redirect: false,
+    });
+  };
 
-  // const handleSignOut = () => {
-  //   signOut();
-  // };
+  const handleSignOut = () => {
+    signOut();
+  };
 
   return (
     <>
@@ -96,12 +99,13 @@ export default function Header() {
           </nav>
           <div className="hidden md:block">
             <Button
+              onClick={session ? handleSignOut : handleSignIn}
               href="#"
               bgColor="orange"
               rounded={isSticky ? "rounded-0" : "rounded-lg"}
               className="h-[3.25rem]"
             >
-              Join Now
+              {session ? "Sign Out" : "Sign In"}
             </Button>
           </div>
           <button
