@@ -1,7 +1,7 @@
-import { PrismaAdapter } from '@next-auth/prisma-adapter';
-import { getServerSession } from 'next-auth';
-import GoogleProvider from 'next-auth/providers/google';
-import { db } from './db';
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { getServerSession } from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
+import { db } from "./db";
 
 // Configuration options for authentication
 export const authOptions = {
@@ -17,7 +17,7 @@ export const authOptions = {
   },
 
   // Secret to encrypt cookies
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET || "default-secret",
 
   // Prisma adapter to connect NextAuth.js with the database
   adapter: PrismaAdapter(db),
