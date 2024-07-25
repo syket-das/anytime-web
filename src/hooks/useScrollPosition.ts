@@ -17,7 +17,7 @@ const useScrollPosition = (throttleDelay = 0) => {
     updatePosition();
     window.addEventListener("scroll", updatePosition);
     return () => window.removeEventListener("scroll", updatePosition);
-  }, []);
+  }, [throttleDelay]);
 
   return scrollPosition;
 };
