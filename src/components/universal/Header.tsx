@@ -1,5 +1,4 @@
 "use client";
-import { signOut, signIn, useSession } from "next-auth/react";
 
 import { SVGAttributes, useState, Suspense, lazy } from "react";
 import Link from "next/link";
@@ -15,17 +14,15 @@ export default function Header() {
   const isSticky = scrollTop > PADDING_Y;
   const top = Math.max(0, PADDING_Y - scrollTop);
 
-  const session = useSession();
+  // const handleSignIn = () => {
+  //   signIn("google", {
+  //     redirect: false,
+  //   });
+  // };
 
-  const handleSignIn = () => {
-    signIn("google", {
-      redirect: false,
-    });
-  };
-
-  const handleSignOut = () => {
-    signOut();
-  };
+  // const handleSignOut = () => {
+  //   signOut();
+  // };
 
   return (
     <>
@@ -98,27 +95,14 @@ export default function Header() {
             </ul>
           </nav>
           <div className="hidden md:block">
-            {session.data ? (
-              <Button
-                onClick={handleSignOut}
-                href="#"
-                bgColor="orange"
-                rounded={isSticky ? "rounded-0" : "rounded-lg"}
-                className="h-[3.25rem]"
-              >
-                Logout
-              </Button>
-            ) : (
-              <Button
-                href="#"
-                bgColor="orange"
-                rounded={isSticky ? "rounded-0" : "rounded-lg"}
-                className="h-[3.25rem]"
-                onClick={handleSignIn}
-              >
-                Join Now
-              </Button>
-            )}
+            <Button
+              href="#"
+              bgColor="orange"
+              rounded={isSticky ? "rounded-0" : "rounded-lg"}
+              className="h-[3.25rem]"
+            >
+              Join Now
+            </Button>
           </div>
           <button
             aria-label="open navigation menu"
