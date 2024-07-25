@@ -12,8 +12,5 @@
         "includeFiles": ["prisma/**"]
       }
     }
-  ],
-  "hooks": {
-    "build": "npx prisma generate"
-  }
+  ]
 }
