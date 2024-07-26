@@ -43,13 +43,18 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(uuid()) @map("_id")
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
+  id             String          @id @default(uuid()) @map("_id")
+  name           String?
+  email          String?         @unique
+  emailVerified  DateTime?
+  image          String?
+  accounts       Account[]
+  sessions       Session[]
+  depositWallets DepositWallet[]
+  deposits       Deposit[]
+  banks          UserBank[]
+  withdrawals    Withdrawal[]
+  exchanges      Exchange[]
 }
 
 model VerificationToken {
@@ -59,4 +64,93 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model DepositWallet {
+  id         String    @id @default(uuid()) @map("_id")
+  userId     String
+  address    String
+  publicKey  String
+  privateKey String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime?
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  deposits   Deposit[]
+}
+
+model Deposit {
+  id            String        @id @default(uuid()) @map("_id")
+  userId        String
+  walletId      String
+  amount        Float
+  currency      String
+  status        String
+  transactionId String
+  remark        String?
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  wallet        DepositWallet @relation(fields: [walletId], references: [id])
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime?
+}
+
+model UserBank {
+  id          String       @id @default(uuid()) @map("_id")
+  userId      String
+  bankName    String
+  accountNo   String
+  accountName String
+  IFSC        String
+  branch      String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime?
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  withdrawals Withdrawal[]
+}
+
+model ExchangeRate {
+  id   String @id @default(uuid()) @map("_id")
+  from String
+  to   String
+
+  rate      Float
+  exchanges Exchange[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime?
+}
+
+model Withdrawal {
+  id            String    @id @default(uuid()) @map("_id")
+  userId        String
+  bankId        String
+  amount        Float
+  currency      String
+  status        String
+  transactionId String?
+  reference     String?
+  remark        String?
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bank          UserBank  @relation(fields: [bankId], references: [id])
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime?
+}
+
+model Exchange {
+  id     String @id @default(uuid()) @map("_id")
+  userId String
+  from   String
+  to     String
+
+  fromAmount Float
+  toAmount   Float?
+
+  rateId       String
+  exchangeRate ExchangeRate @relation(fields: [rateId], references: [id])
+
+  status        String
+  transactionId String?
+  reference     String?
+  remark        String?
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime?
 }
