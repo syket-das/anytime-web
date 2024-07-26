@@ -8,13 +8,15 @@ export async function POST(req: NextRequest) {
   try {
     const { accessToken } = await req.json();
 
-    if (accessToken) {
+    if (!accessToken) {
       // Return a response immediately and exit the function
       return NextResponse.json(
         { error: "All fields are required!" },
         { status: 400 }
       );
     }
+
+    console.log(accessToken);
 
     const { data: userData, error: authError } =
       await supabaseAdmin.auth.getUser(accessToken);
