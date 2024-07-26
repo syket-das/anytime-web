@@ -16,8 +16,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    console.log(accessToken);
-
     const { data: userData, error: authError } =
       await supabaseAdmin.auth.getUser(accessToken);
 
