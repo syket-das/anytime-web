@@ -51,5 +51,12 @@ export async function middleware(request: ExtendedNextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/api/user/profile", "/api/deposit"],
+  matcher: [
+    "/api/user/profile",
+    "/api/user/deposit",
+    "/api/user/userbank",
+    "/api/user/withdraw",
+    "/api/user/balance",
+    "/api/user/exchange",
+  ],
 };

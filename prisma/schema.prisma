@@ -13,6 +13,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum STATUS {
+  PENDING
+  SUCCESS
+  FAILED
+  CANCELLED
+  NOT_VERIFIED
+}
+
+enum CURRENCY {
+  USDT
+  INR
+}
+
 model Account {
   id                 String  @id @default(uuid()) @map("_id")
   userId             String
@@ -78,50 +91,24 @@ model DepositWallet {
   deposits   Deposit[]
 }
 
-enum STATUS {
-  PENDING
-  SUCCESS
-  FAILED
-  NOT_VERIFIED
-}
-
-enum CURRENCY {
-  USDT
-}
-
-model Deposit {
-  id            String        @id @default(uuid()) @map("_id")
-  userId        String
-  walletId      String
-  amount        Float
-  currency      CURRENCY
-  status        STATUS
-  transactionId String
-  remark        String?
-  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  wallet        DepositWallet @relation(fields: [walletId], references: [id])
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime?
-}
-
 model UserBank {
-  id          String       @id @default(uuid()) @map("_id")
+  id          String     @id @default(uuid()) @map("_id")
   userId      String
   bankName    String
   accountNo   String
   accountName String
   IFSC        String
   branch      String
-  createdAt   DateTime     @default(now())
+  createdAt   DateTime   @default(now())
   updatedAt   DateTime?
-  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  withdrawals Withdrawal[]
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exchanges   Exchange[]
 }
 
 model ExchangeRate {
-  id   String @id @default(uuid()) @map("_id")
-  from String
-  to   String
+  id   String   @id @default(uuid()) @map("_id")
+  from CURRENCY
+  to   CURRENCY
 
   rate      Float
   exchanges Exchange[]
@@ -129,35 +116,40 @@ model ExchangeRate {
   updatedAt DateTime?
 }
 
-model Withdrawal {
-  id            String    @id @default(uuid()) @map("_id")
+model Deposit {
+  id            String        @id @default(uuid()) @map("_id")
   userId        String
-  bankId        String
+  walletId      String
   amount        Float
-  currency      String
-  status        String
-  transactionId String?
-  reference     String?
+  convienceFee  Float         @default(0)
+  currency      CURRENCY
+  status        STATUS
+  transactionId String        @unique
   remark        String?
-  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  bank          UserBank  @relation(fields: [bankId], references: [id])
-  createdAt     DateTime  @default(now())
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  wallet        DepositWallet @relation(fields: [walletId], references: [id])
+  createdAt     DateTime      @default(now())
   updatedAt     DateTime?
 }
 
 model Exchange {
-  id     String @id @default(uuid()) @map("_id")
+  id     String   @id @default(uuid()) @map("_id")
   userId String
-  from   String
-  to     String
+  from   CURRENCY
+  to     CURRENCY
 
   fromAmount Float
   toAmount   Float?
 
+  convienceFee Float @default(0)
+
   rateId       String
   exchangeRate ExchangeRate @relation(fields: [rateId], references: [id])
 
-  status        String
+  userBankId String
+  bank       UserBank @relation(fields: [userBankId], references: [id])
+
+  status        STATUS
   transactionId String?
   reference     String?
   remark        String?
@@ -165,3 +157,21 @@ model Exchange {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime?
 }
+
+model Withdrawal {
+  id            String    @id @default(uuid()) @map("_id")
+  userId        String
+  amount        Float
+  convienceFee  Float     @default(1)
+  walletAddress String
+  currency      CURRENCY
+  status        STATUS
+  transactionId String?
+  reference     String?
+  remark        String?
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime?
+}
+
+// convienceFee

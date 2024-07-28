@@ -11,12 +11,6 @@ export async function GET(req: ExtendedNextRequest) {
         id: userId,
       },
       include: {
-        depositWallets: {
-          select: {
-            address: true,
-            publicKey: true,
-          },
-        },
         banks: true,
       },
     });
