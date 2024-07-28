@@ -78,13 +78,24 @@ model DepositWallet {
   deposits   Deposit[]
 }
 
+enum STATUS {
+  PENDING
+  SUCCESS
+  FAILED
+  NOT_VERIFIED
+}
+
+enum CURRENCY {
+  USDT
+}
+
 model Deposit {
   id            String        @id @default(uuid()) @map("_id")
   userId        String
   walletId      String
   amount        Float
-  currency      String
-  status        String
+  currency      CURRENCY
+  status        STATUS
   transactionId String
   remark        String?
   user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
