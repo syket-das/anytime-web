@@ -1,12 +1,17 @@
 import { prisma } from "@/lib/db";
 import { CURRENCY, STATUS } from "@prisma/client";
+import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { ExtendedNextRequest } from "types";
 
 export async function GET(req: ExtendedNextRequest) {
   try {
-    const userId = req.userId;
+    const headersList = headers();
+    const userId = headersList.get("userId");
 
+    if (!userId) {
+      return NextResponse.json({ error: "User not found!" }, { status: 404 });
+    }
     const userExchanges = await prisma.exchange.findMany({
       where: {
         userId,
@@ -27,8 +32,12 @@ export async function GET(req: ExtendedNextRequest) {
 
 export async function POST(req: ExtendedNextRequest) {
   try {
-    const userId = req.userId;
+    const headersList = headers();
+    const userId = headersList.get("userId");
 
+    if (!userId) {
+      return NextResponse.json({ error: "User not found!" }, { status: 404 });
+    }
     const { fromAmount, toAmount, userBankId, rateId } = await req.json();
 
     if (!fromAmount || !toAmount || !userBankId || !userId) {

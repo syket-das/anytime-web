@@ -1,12 +1,17 @@
 import { prisma } from "@/lib/db";
 import { CURRENCY, STATUS } from "@prisma/client";
+import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { ExtendedNextRequest } from "types";
 
 export async function GET(req: ExtendedNextRequest) {
   try {
-    const userId = req.userId;
+    const headersList = headers();
+    const userId = headersList.get("userId");
 
+    if (!userId) {
+      return NextResponse.json({ error: "User not found!" }, { status: 404 });
+    }
     const userWithdrawls = await prisma.withdrawal.findMany({
       where: {
         userId,
@@ -27,7 +32,12 @@ export async function GET(req: ExtendedNextRequest) {
 
 export async function POST(req: ExtendedNextRequest) {
   try {
-    const userId = req.userId;
+    const headersList = headers();
+    const userId = headersList.get("userId");
+
+    if (!userId) {
+      return NextResponse.json({ error: "User not found!" }, { status: 404 });
+    }
     const { walletAddress, amount } = await req.json();
 
     if (!walletAddress || !userId) {

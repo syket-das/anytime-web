@@ -1,24 +1,22 @@
-import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
-import { authOptions } from "./lib/auth";
 import { verifyJwt } from "./lib/jwt";
 
 // Extend the NextRequest interface to include the 'userId' property
-interface ExtendedNextRequest extends NextRequest {
-  userId?: string;
-}
 
-// This function can be marked `async` if using `await` inside
-export async function middleware(request: ExtendedNextRequest) {
+export async function middleware(request: NextRequest) {
+  console.log("middleware");
+
   const authToken = request.headers.get("Authorization");
 
-  if (!authToken) {
+  if (!authToken || !authToken.startsWith("Bearer ")) {
     return NextResponse.json(
-      { error: "Failed to authenticate the request! " },
+      { error: "Failed to authenticate the request!" },
       { status: 400 }
     );
   }
+
+  const token = authToken.split(" ")[1];
 
   try {
     const {
@@ -27,14 +25,25 @@ export async function middleware(request: ExtendedNextRequest) {
     }: {
       error: any;
       decoded: any;
-    } = await verifyJwt(authToken);
+    } = await verifyJwt(token);
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 400 });
+      return NextResponse.json(
+        { error: "Failed to authenticate the request!" },
+        { status: 400 }
+      );
     }
 
-    request.userId = decoded.id;
-    return NextResponse.next();
+    const requestHeaders = new Headers(request.headers);
+    requestHeaders.set("userId", decoded.id);
+
+    const response = NextResponse.next({
+      request: new Request(request, {
+        headers: requestHeaders,
+      }),
+    });
+
+    return response;
   } catch (error) {
     console.error("Authentication error:", error);
     return NextResponse.json(

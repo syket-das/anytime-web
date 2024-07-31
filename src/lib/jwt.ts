@@ -1,22 +1,20 @@
-import jwt from "jsonwebtoken";
+import { SignJWT, jwtVerify } from "jose";
 
-export const signJwt = (payload: any) => {
-  return jwt.sign(payload, process.env.NEXTAUTH_SECRET as string, {
-    expiresIn: "30d",
-  });
+const secret = new TextEncoder().encode(process.env.NEXTAUTH_SECRET);
+
+export const signJwt = async (payload: any) => {
+  return new SignJWT(payload)
+    .setProtectedHeader({ alg: "HS256" })
+    .setIssuedAt()
+    .setExpirationTime("30d")
+    .sign(secret);
 };
 
-export const verifyJwt = (token: string) => {
-  let error = null;
-  let decoded = null;
-
-  jwt.verify(token, process.env.NEXTAUTH_SECRET as string, (err, result) => {
-    if (err) {
-      error = err;
-    } else {
-      decoded = result;
-    }
-  });
-
-  return { error, decoded };
+export const verifyJwt = async (token: string) => {
+  try {
+    const { payload } = await jwtVerify(token, secret);
+    return { error: null, decoded: payload };
+  } catch (error) {
+    return { error, decoded: null };
+  }
 };
