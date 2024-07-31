@@ -56,6 +56,7 @@ export const config = {
   matcher: [
     "/api/user/profile",
     "/api/user/deposit",
+    "/api/user/deposit/verify",
     "/api/user/userbank",
     "/api/user/withdraw",
     "/api/user/balance",
