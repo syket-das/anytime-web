@@ -48,6 +48,9 @@ export async function POST(req: ExtendedNextRequest) {
 
     // Check if the transaction is a token transfer (BEP-20)
     const receipt = await web3.eth.getTransactionReceipt(transactionId);
+
+    console.log(receipt);
+
     const transferEvent = receipt.logs.find(
       (log: any) =>
         log.topics[0] === web3.utils.sha3("Transfer(address,address,uint256)")
@@ -121,8 +124,10 @@ export async function POST(req: ExtendedNextRequest) {
       data: deposit,
     });
   } catch (error) {
+    console.log(error);
+
     return NextResponse.json(
-      { error: "Failed to fetch user deposit wallets!" },
+      { error: error.message || "Internal server error!" },
       { status: 500 }
     );
   }
