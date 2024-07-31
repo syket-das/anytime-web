@@ -30,6 +30,3 @@ export const authOptions = {
     }),
   ],
 };
-
-// Utility function to retrieve the server session with authentication options
-export const getServerAuthSession = () => getServerSession(authOptions);

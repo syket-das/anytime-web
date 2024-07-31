@@ -1,18 +1,21 @@
+import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
-import { ExtendedNextRequest } from "types";
-import { getServerAuthSession } from "./lib/auth";
+import { authOptions } from "./lib/auth";
 import { verifyJwt } from "./lib/jwt";
 
 // Extend the NextRequest interface to include the 'userId' property
+interface ExtendedNextRequest extends NextRequest {
+  userId?: string;
+}
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: ExtendedNextRequest) {
-  const session = await getServerAuthSession();
+  console.log("middleware");
 
   const authToken = request.headers.get("Authorization");
 
-  if (!authToken || !session?.user?.id) {
+  if (!authToken) {
     return NextResponse.json(
       { error: "Failed to authenticate the request!" },
       { status: 400 }
@@ -20,11 +23,6 @@ export async function middleware(request: ExtendedNextRequest) {
   }
 
   try {
-    if (session?.user?.id) {
-      request.userId = session.user.id;
-      return;
-    }
-
     const {
       error,
       decoded,
@@ -41,7 +39,9 @@ export async function middleware(request: ExtendedNextRequest) {
     }
 
     request.userId = decoded.id;
+    return NextResponse.next();
   } catch (error) {
+    console.error("Authentication error:", error);
     return NextResponse.json(
       { error: "Failed to authenticate the request!" },
       { status: 400 }
