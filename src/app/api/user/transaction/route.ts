@@ -68,7 +68,7 @@ export async function GET(req: ExtendedNextRequest) {
     });
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to fetch user withdraws!" },
+      { error: "Failed to fetch user transactions!" },
       { status: 500 }
     );
   }
