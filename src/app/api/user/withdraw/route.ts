@@ -83,7 +83,12 @@ export async function POST(req: ExtendedNextRequest) {
 
 export async function PUT(req: ExtendedNextRequest) {
   try {
-    const userId = req.userId;
+    const headersList = headers();
+    const userId = headersList.get("userId");
+
+    if (!userId) {
+      return NextResponse.json({ error: "User not found!" }, { status: 404 });
+    }
     const { id, status } = await req.json();
 
     if (!id || !status || !userId) {
