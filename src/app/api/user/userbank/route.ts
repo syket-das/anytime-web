@@ -14,14 +14,7 @@ export async function POST(req: ExtendedNextRequest) {
     }
     const { accountNo, accountName, IFSC, branch, bankName } = await req.json();
 
-    if (
-      !accountNo ||
-      !accountName ||
-      !IFSC ||
-      !branch ||
-      !bankName ||
-      !userId
-    ) {
+    if (!accountNo || !accountName || !IFSC || !branch || !bankName) {
       return NextResponse.json(
         { error: "Please provide all the required fields!" },
         { status: 400 }

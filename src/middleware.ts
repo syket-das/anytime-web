@@ -5,8 +5,6 @@ import { verifyJwt } from "./lib/jwt";
 // Extend the NextRequest interface to include the 'userId' property
 
 export async function middleware(request: NextRequest) {
-  console.log("middleware");
-
   const authToken = request.headers.get("Authorization");
 
   if (!authToken || !authToken.startsWith("Bearer ")) {
