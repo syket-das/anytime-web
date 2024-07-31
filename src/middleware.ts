@@ -11,13 +11,11 @@ interface ExtendedNextRequest extends NextRequest {
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: ExtendedNextRequest) {
-  console.log("middleware");
-
   const authToken = request.headers.get("Authorization");
 
   if (!authToken) {
     return NextResponse.json(
-      { error: "Failed to authenticate the request!" },
+      { error: "Failed to authenticate the request! " },
       { status: 400 }
     );
   }
@@ -32,10 +30,7 @@ export async function middleware(request: ExtendedNextRequest) {
     } = await verifyJwt(authToken);
 
     if (error) {
-      return NextResponse.json(
-        { error: "Failed to authenticate the request!" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: error.message }, { status: 400 });
     }
 
     request.userId = decoded.id;
