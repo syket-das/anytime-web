@@ -61,5 +61,6 @@ export const config = {
     "/api/user/withdraw",
     "/api/user/balance",
     "/api/user/exchange",
+    "/api/user/transaction",
   ],
 };
