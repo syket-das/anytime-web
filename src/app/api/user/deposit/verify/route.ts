@@ -24,6 +24,7 @@ export async function POST(req: ExtendedNextRequest) {
       },
 
       select: {
+        id: true,
         address: true,
         publicKey: true,
       },
@@ -48,8 +49,6 @@ export async function POST(req: ExtendedNextRequest) {
 
     // Check if the transaction is a token transfer (BEP-20)
     const receipt = await web3.eth.getTransactionReceipt(transactionId);
-
-    console.log(receipt);
 
     const transferEvent = receipt.logs.find(
       (log: any) =>
