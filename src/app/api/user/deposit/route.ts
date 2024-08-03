@@ -17,6 +17,7 @@ export async function GET(req: ExtendedNextRequest) {
       },
 
       select: {
+        id: true,
         address: true,
         publicKey: true,
       },
