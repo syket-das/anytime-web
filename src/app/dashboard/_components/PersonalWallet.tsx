@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
   Card,
@@ -9,8 +10,17 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Copy } from "lucide-react";
+import { useTransactionStore } from "@/store/transactionStore";
 
-const ActionButtons = () => {
+const PersonalWallet = () => {
+  const { getBalance, balance, depositWallets, getDepositWallets }: any =
+    useTransactionStore((state) => state);
+
+  React.useEffect(() => {
+    getBalance();
+    getDepositWallets();
+  }, []);
+
   return (
     <Card className="h-full">
       <CardHeader>
@@ -19,7 +29,7 @@ const ActionButtons = () => {
       </CardHeader>
       <CardContent>
         <div className="flex  gap-2 w-full justify-center">
-          <p className="text-3xl  font-bold">800 </p>
+          <p className="text-3xl  font-bold">{balance} </p>
           <p className="text-muted-foreground text-sm mt-auto font-bold">
             USDT
           </p>
@@ -32,9 +42,16 @@ const ActionButtons = () => {
         <p className="font-bold">Your Wallet Address</p>
         <div className="flex gap-2 items-center justify-between  rounded pl-2">
           <p className="text-muted-foreground truncate">
-            0x8e8e2bahshjksjsjsj7474646hsdbjksdbksdksdhkjhk
+            {depositWallets[0]?.address}
           </p>
-          <Button variant="outline" size="sm" className="">
+          <Button
+            onClick={() =>
+              navigator.clipboard.writeText(depositWallets[0]?.address)
+            }
+            variant="outline"
+            size="sm"
+            className=""
+          >
             <Copy className="text-muted-foreground" size={16} />
           </Button>
         </div>
@@ -43,4 +60,4 @@ const ActionButtons = () => {
   );
 };
 
-export default ActionButtons;
+export default PersonalWallet;

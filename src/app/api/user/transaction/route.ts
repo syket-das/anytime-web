@@ -32,21 +32,21 @@ export async function GET(req: ExtendedNextRequest) {
     const modifyWithdrawls = userWithdrawls.map((withdrawl) => {
       return {
         ...withdrawl,
-        type: "withdraw",
+        type: "WITHDRAW",
       };
     });
 
     const modifyDeposits = userDeposits.map((deposit) => {
       return {
         ...deposit,
-        type: "deposit",
+        type: "DEPOSIT",
       };
     });
 
     const modifyExchanges = userExchanges.map((exchange) => {
       return {
         ...exchange,
-        type: "exchange",
+        type: "EXCHANGE",
       };
     });
 

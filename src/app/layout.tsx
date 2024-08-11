@@ -5,6 +5,7 @@ import Header from "@/components/universal/Header";
 import Footer from "@/components/universal/Footer";
 import AuthProvider from "@/components/providers/AuthProvider";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { Toaster } from "@/components/ui/sonner";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -20,6 +21,7 @@ export default function RootLayout({ children }: IProps) {
         <TooltipProvider>
           <body>
             <main>{children}</main>
+            <Toaster />
           </body>
         </TooltipProvider>
       </AuthProvider>

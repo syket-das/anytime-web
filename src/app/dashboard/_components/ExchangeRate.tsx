@@ -16,28 +16,44 @@ import {
 } from "@/components//ui/chart";
 import { Button } from "@/components/ui/button";
 import { RefreshCcw } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useRate } from "@/store/rateStore";
+import { format } from "date-fns";
 
 export default function ExchangeRate() {
+  const { rates, lastRate, getRates, loading }: any = useRate((state) => state);
+
+  useEffect(() => {
+    getRates();
+  }, []);
+
   return (
     <Card className="flex flex-col h-full relative">
       <CardHeader>
         <CardTitle>Today{`'s`} Exchange Rate</CardTitle>
-        <CardDescription className="text-2xl">89</CardDescription>
+        <CardDescription className="text-2xl">
+          {loading ? "..." : lastRate ? lastRate.rate : "N/A"}
+        </CardDescription>
       </CardHeader>
 
       <Button
+        onClick={() => getRates()}
         size={"icon"}
         variant={"ghost"}
         className="absolute top-4 right-4 rounded-full"
       >
-        <RefreshCcw className="h-5 w-5" />
+        <RefreshCcw
+          className={`
+          h-5 w-5 ${loading ? "animate-spin" : ""}
+          `}
+        />
       </Button>
 
       <CardContent className="flex flex-1 items-center">
         <ChartContainer
           config={{
             resting: {
-              label: "Resting",
+              label: "Rate",
               color: "hsl(var(--chart-1))",
             },
           }}
@@ -51,34 +67,12 @@ export default function ExchangeRate() {
               top: 10,
             }}
             data={[
-              {
-                date: "2024-01-01",
-                resting: 62,
-              },
-              {
-                date: "2024-01-02",
-                resting: 72,
-              },
-              {
-                date: "2024-01-03",
-                resting: 35,
-              },
-              {
-                date: "2024-01-04",
-                resting: 62,
-              },
-              {
-                date: "2024-01-05",
-                resting: 52,
-              },
-              {
-                date: "2024-01-06",
-                resting: 62,
-              },
-              {
-                date: "2024-01-07",
-                resting: 70,
-              },
+              ...rates.map((rate: any) => {
+                return {
+                  date: format(rate.createdAt, "yyyy-MM-dd"),
+                  rate: rate.rate,
+                };
+              }),
             ]}
           >
             <CartesianGrid
@@ -100,7 +94,7 @@ export default function ExchangeRate() {
               }}
             />
             <Line
-              dataKey="resting"
+              dataKey="rate"
               type="natural"
               fill="var(--color-resting)"
               stroke="var(--color-resting)"

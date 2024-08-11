@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import {
   Bell,
@@ -33,8 +34,11 @@ import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import DashboardSidebar from "./DashboardSidebar";
 import NavItems from "./NavItems";
+import { signOut, useSession } from "next-auth/react";
 
 export function Wrapper({ children }: { children: React.ReactNode }) {
+  const { data: session, status } = useSession();
+
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       <DashboardSidebar />
@@ -99,16 +103,20 @@ export function Wrapper({ children }: { children: React.ReactNode }) {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-[250px]">
               <DropdownMenuLabel>
-                <div className="font-medium">Liam Johnson</div>
+                <div className="font-medium">
+                  {session ? session.user.name : "Guest"}
+                </div>
                 <div className=" text-sm text-muted-foreground md:inline">
-                  liam@example.com
+                  {session ? session.user.email : ""}
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuItem>Support</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => signOut()}>
+                Logout
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </header>
