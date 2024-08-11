@@ -3,14 +3,14 @@ import Button from "./Button";
 
 export default function Footer() {
   return (
-    <footer className="bg-primary-dark text-white pt-10 md:pt-20 mt-20 md:mt-40">
+    <footer className=" pt-10 md:pt-20 mt-20 md:mt-40 bg-slate-900 text-white">
       <section className="container mb-24 text-center">
         <h2 className="text-3xl md:text-5xl !font-normal leading-[3.6rem] md:leading-[4.5rem] !tracking-normal">
           Join millions of <br />
           creative people with Anytime P2P
         </h2>
         <Button
-          className="mt-6 text-[#121313] font-extrabold bg-[#F9896B]"
+          className="mt-6 text-[#121313] font-extrabold"
           rounded="rounded-md"
           href="#"
         >
@@ -27,7 +27,7 @@ export default function Footer() {
           <h3 className="text-xl uppercase font-bold tracking-wide">
             Anytime P2P
           </h3>
-          <p className="text-[#ffffff66] text-base mt-9 max-w-lg tracking-wide">
+          <p className=" text-base mt-9 max-w-lg tracking-wide">
             Yet bed any for traveling assistance indulgence unpleasing. Not
             thoughts all exercise blessing. Indulgence way everything joy
             alteration boisterous the attachment.

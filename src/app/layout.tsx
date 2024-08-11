@@ -4,6 +4,7 @@ import { Manrope } from "next/font/google";
 import Header from "@/components/universal/Header";
 import Footer from "@/components/universal/Footer";
 import AuthProvider from "@/components/providers/AuthProvider";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -16,11 +17,11 @@ export default function RootLayout({ children }: IProps) {
     <html lang="en" className={manrope.variable}>
       <head />
       <AuthProvider>
-        <body>
-          <Header />
-          <main>{children}</main>
-          <Footer />
-        </body>
+        <TooltipProvider>
+          <body>
+            <main>{children}</main>
+          </body>
+        </TooltipProvider>
       </AuthProvider>
     </html>
   );

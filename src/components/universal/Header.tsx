@@ -98,15 +98,26 @@ export default function Header() {
             </ul>
           </nav>
           <div className="hidden md:block">
-            <Button
-              onClick={session ? handleSignOut : handleSignIn}
-              href="#"
-              bgColor="orange"
-              rounded={isSticky ? "rounded-0" : "rounded-lg"}
-              className="h-[3.25rem]"
-            >
-              {session ? "Sign Out" : "Sign In"}
-            </Button>
+            {!session?.user?.id ? (
+              <Button
+                onClick={session ? handleSignOut : handleSignIn}
+                href="#"
+                bgColor="orange"
+                rounded={isSticky ? "rounded-0" : "rounded-lg"}
+                className="h-[3.25rem]"
+              >
+                {"Sign In"}
+              </Button>
+            ) : (
+              <Button
+                href="/dashboard"
+                bgColor="primary"
+                rounded={isSticky ? "rounded-0" : "rounded-lg"}
+                className="h-[3.25rem]"
+              >
+                {"Dashboard"}
+              </Button>
+            )}
           </div>
           <button
             aria-label="open navigation menu"

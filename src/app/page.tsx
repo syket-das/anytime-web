@@ -5,6 +5,8 @@ import Feature from "@/components/home/Feature";
 import GDPRFeature from "@/components/home/GDPRFeature";
 import ValuePropositions from "@/components/home/ValuePropositions";
 import Blog from "@/components/home/Blog";
+import Header from "@/components/universal/Header";
+import Footer from "@/components/universal/Footer";
 
 const title = "AnytimeP2P | Manage Crypto Portfolio";
 const description =
@@ -43,6 +45,8 @@ export const metadata = {
 export default function Home() {
   return (
     <>
+      <Header />
+
       <Hero />
       <Related />
       <Content />
@@ -50,6 +54,7 @@ export default function Home() {
       <GDPRFeature />
       <ValuePropositions />
       <Blog />
+      <Footer />
     </>
   );
 }
