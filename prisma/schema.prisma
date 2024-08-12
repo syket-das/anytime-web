@@ -53,6 +53,8 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
 }
 
 model User {
@@ -68,6 +70,9 @@ model User {
   banks          UserBank[]
   withdrawals    Withdrawal[]
   exchanges      Exchange[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
 }
 
 model VerificationToken {
@@ -82,13 +87,14 @@ model VerificationToken {
 model DepositWallet {
   id         String    @id @default(uuid()) @map("_id")
   userId     String
-  address    String
-  publicKey  String
+  address    String    @unique
+  publicKey  String    @unique
   privateKey String
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime?
   user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   deposits   Deposit[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
 }
 
 model UserBank {
@@ -99,20 +105,21 @@ model UserBank {
   accountName String
   IFSC        String
   branch      String
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime?
   user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   exchanges   Exchange[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
 }
 
 model ExchangeRate {
-  id   String   @id @default(uuid()) @map("_id")
-  from CURRENCY
-  to   CURRENCY
-
+  id        String     @id @default(uuid()) @map("_id")
+  from      CURRENCY
+  to        CURRENCY
   rate      Float
   exchanges Exchange[]
-  createdAt DateTime   @default(now())
+
+  createdAt DateTime  @default(now())
   updatedAt DateTime?
 }
 
@@ -128,50 +135,48 @@ model Deposit {
   remark        String?
   user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   wallet        DepositWallet @relation(fields: [walletId], references: [id])
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime?
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
 }
 
 model Exchange {
-  id     String   @id @default(uuid()) @map("_id")
-  userId String
-  from   CURRENCY
-  to     CURRENCY
-
-  fromAmount Float
-  toAmount   Float?
-
-  convienceFee Float @default(0)
-
-  rateId       String
-  exchangeRate ExchangeRate @relation(fields: [rateId], references: [id])
-
-  userBankId String
-  bank       UserBank @relation(fields: [userBankId], references: [id])
-
+  id            String       @id @default(uuid()) @map("_id")
+  userId        String
+  from          CURRENCY
+  to            CURRENCY
+  fromAmount    Float
+  toAmount      Float?
+  convienceFee  Float        @default(0)
+  rateId        String
+  exchangeRate  ExchangeRate @relation(fields: [rateId], references: [id])
+  userBankId    String
+  bank          UserBank     @relation(fields: [userBankId], references: [id])
   status        STATUS
   transactionId String?
   reference     String?
   remark        String?
-  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime?
+  user          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
 }
 
 model Withdrawal {
-  id            String    @id @default(uuid()) @map("_id")
+  id            String   @id @default(uuid()) @map("_id")
   userId        String
   amount        Float
-  convienceFee  Float     @default(1)
+  convienceFee  Float    @default(1)
   walletAddress String
   currency      CURRENCY
   status        STATUS
   transactionId String?
   reference     String?
   remark        String?
-  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime?
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
 }
 
 // convienceFee

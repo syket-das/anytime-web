@@ -151,6 +151,213 @@ const Transactions = () => {
           </CardContent>
         </Card>
       </TabsContent>
+      <TabsContent value="deposits">
+        <Card x-chunk="dashboard-05-chunk-3">
+          <CardHeader className="px-7">
+            <CardTitle>Transactions</CardTitle>
+            <CardDescription>View all your transactions here</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>ID</TableHead>
+                  <TableHead className="">Type</TableHead>
+                  <TableHead className="hidden sm:table-cell">Status</TableHead>
+                  <TableHead className="hidden md:table-cell">Date</TableHead>
+                  <TableHead className="">Amount</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {transactions
+                  .filter((transaction: any) => transaction.type === "DEPOSIT")
+                  .map((transaction: any) => (
+                    <TableRow key={transaction.id}>
+                      <TableCell>
+                        <div className="font-medium">{transaction.id}</div>
+                      </TableCell>
+                      <TableCell className="">{transaction.type}</TableCell>
+                      <TableCell className="hidden sm:table-cell">
+                        <Badge className="text-xs" variant="outline">
+                          {transaction.status}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="hidden md:table-cell">
+                        {formatDate(transaction.createdAt, "dd/MM/yyyy")}
+                      </TableCell>
+                      <TableCell className="">
+                        ₮{" "}
+                        {transaction.type === "EXCHANGE"
+                          ? transaction.fromAmount
+                          : transaction.amount}
+                      </TableCell>
+                      <TableCell className="">
+                        <Dialog>
+                          <DialogTrigger>
+                            <Button variant="default" size="icon">
+                              <Expand className="h-4 w-4" />
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="max-w-2xl">
+                            <DialogHeader>
+                              <DialogTitle>Transaction Details</DialogTitle>
+                              <DialogDescription>
+                                All the details of the transaction
+                              </DialogDescription>
+                            </DialogHeader>
+                            <div className="">
+                              <pre className=" p-4 bg-gray-100 rounded-md">
+                                {JSON.stringify(transaction, undefined, 2)}
+                              </pre>
+                            </div>
+                          </DialogContent>
+                        </Dialog>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
+      </TabsContent>
+      <TabsContent value="withdraws">
+        <Card x-chunk="dashboard-05-chunk-3">
+          <CardHeader className="px-7">
+            <CardTitle>Transactions</CardTitle>
+            <CardDescription>View all your transactions here</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>ID</TableHead>
+                  <TableHead className="">Type</TableHead>
+                  <TableHead className="hidden sm:table-cell">Status</TableHead>
+                  <TableHead className="hidden md:table-cell">Date</TableHead>
+                  <TableHead className="">Amount</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {transactions
+                  .filter((transaction: any) => transaction.type === "WITHDRAW")
+                  .map((transaction: any) => (
+                    <TableRow key={transaction.id}>
+                      <TableCell>
+                        <div className="font-medium">{transaction.id}</div>
+                      </TableCell>
+                      <TableCell className="">{transaction.type}</TableCell>
+                      <TableCell className="hidden sm:table-cell">
+                        <Badge className="text-xs" variant="outline">
+                          {transaction.status}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="hidden md:table-cell">
+                        {formatDate(transaction.createdAt, "dd/MM/yyyy")}
+                      </TableCell>
+                      <TableCell className="">
+                        ₮{" "}
+                        {transaction.type === "EXCHANGE"
+                          ? transaction.fromAmount
+                          : transaction.amount}
+                      </TableCell>
+                      <TableCell className="">
+                        <Dialog>
+                          <DialogTrigger>
+                            <Button variant="default" size="icon">
+                              <Expand className="h-4 w-4" />
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="max-w-2xl">
+                            <DialogHeader>
+                              <DialogTitle>Transaction Details</DialogTitle>
+                              <DialogDescription>
+                                All the details of the transaction
+                              </DialogDescription>
+                            </DialogHeader>
+                            <div className="">
+                              <pre className=" p-4 bg-gray-100 rounded-md">
+                                {JSON.stringify(transaction, undefined, 2)}
+                              </pre>
+                            </div>
+                          </DialogContent>
+                        </Dialog>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
+      </TabsContent>
+      <TabsContent value="exchanges">
+        <Card x-chunk="dashboard-05-chunk-3">
+          <CardHeader className="px-7">
+            <CardTitle>Transactions</CardTitle>
+            <CardDescription>View all your transactions here</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>ID</TableHead>
+                  <TableHead className="">Type</TableHead>
+                  <TableHead className="hidden sm:table-cell">Status</TableHead>
+                  <TableHead className="hidden md:table-cell">Date</TableHead>
+                  <TableHead className="">Amount</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {transactions
+                  .filter((transaction: any) => transaction.type === "EXCHANGE")
+                  .map((transaction: any) => (
+                    <TableRow key={transaction.id}>
+                      <TableCell>
+                        <div className="font-medium">{transaction.id}</div>
+                      </TableCell>
+                      <TableCell className="">{transaction.type}</TableCell>
+                      <TableCell className="hidden sm:table-cell">
+                        <Badge className="text-xs" variant="outline">
+                          {transaction.status}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="hidden md:table-cell">
+                        {formatDate(transaction.createdAt, "dd/MM/yyyy")}
+                      </TableCell>
+                      <TableCell className="">
+                        ₮{" "}
+                        {transaction.type === "EXCHANGE"
+                          ? transaction.fromAmount
+                          : transaction.amount}
+                      </TableCell>
+                      <TableCell className="">
+                        <Dialog>
+                          <DialogTrigger>
+                            <Button variant="default" size="icon">
+                              <Expand className="h-4 w-4" />
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="max-w-2xl">
+                            <DialogHeader>
+                              <DialogTitle>Transaction Details</DialogTitle>
+                              <DialogDescription>
+                                All the details of the transaction
+                              </DialogDescription>
+                            </DialogHeader>
+                            <div className="">
+                              <pre className=" p-4 bg-gray-100 rounded-md">
+                                {JSON.stringify(transaction, undefined, 2)}
+                              </pre>
+                            </div>
+                          </DialogContent>
+                        </Dialog>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
+      </TabsContent>
     </Tabs>
   );
 };

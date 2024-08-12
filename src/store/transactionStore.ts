@@ -34,13 +34,17 @@ export const useTransactionStore = create((set, get) => ({
         },
       });
 
+      console.log("data", data);
+
       set({ loading: false });
     } catch (error: any) {
+      console.log("error", error);
+
       set({
         error: error?.response?.data?.error || error.message,
         loading: false,
       });
-      console.log("Error adding transaction:", error.response.data.error);
+      throw new Error(error?.response?.data?.error || error.message);
     }
   },
 
@@ -57,7 +61,7 @@ export const useTransactionStore = create((set, get) => ({
       set({ loading: false });
     } catch (error: any) {
       set({ error: error.message, loading: false });
-      console.log("Error adding transaction:", error.message);
+      throw new Error(error?.response?.data?.error || error.message);
     }
   },
   exchange: async (d: any) => {

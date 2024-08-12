@@ -21,7 +21,7 @@ export default function RootLayout({ children }: IProps) {
         <TooltipProvider>
           <body>
             <main>{children}</main>
-            <Toaster />
+            <Toaster position="top-center" theme="system" />
           </body>
         </TooltipProvider>
       </AuthProvider>

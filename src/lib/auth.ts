@@ -40,20 +40,26 @@ export const authOptions = {
         if (!userExist) {
           const { address, privateKey } = await createWallet();
 
-          await prisma.user.create({
+          const newUser = await prisma.user.create({
             data: {
               email: user.email,
               name: user.name,
               image: user.image,
-              depositWallets: {
-                create: {
-                  address: address,
-                  privateKey: privateKey,
-                  publicKey: address,
-                },
-              },
             },
           });
+
+          if (!address || !privateKey || !newUser) {
+            return false;
+          }
+          await prisma.depositWallet.create({
+            data: {
+              address,
+              privateKey,
+              publicKey: address,
+              userId: newUser.id,
+            },
+          });
+
           return true;
         }
 

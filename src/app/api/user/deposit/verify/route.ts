@@ -5,6 +5,7 @@ import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { ExtendedNextRequest } from "types";
 import Web3 from "web3";
+import { isHex, isHexString32Bytes } from "web3-validator";
 
 const web3 = new Web3("https://bsc-dataseed.binance.org/"); // Use appropriate provider
 
@@ -17,6 +18,22 @@ export async function POST(req: ExtendedNextRequest) {
       return NextResponse.json({ error: "User not found!" }, { status: 404 });
     }
     const { transactionId } = await req.json();
+
+    console.log("transactionId", transactionId);
+
+    // if (!transactionId || !isHexString32Bytes(transactionId)) {
+    //   return NextResponse.json(
+    //     { error: "Invalid transaction ID!" },
+    //     { status: 400 }
+    //   );
+    // }
+
+    if (!transactionId || typeof transactionId !== "string") {
+      return NextResponse.json(
+        { error: "Please provide a transaction ID!" },
+        { status: 400 }
+      );
+    }
 
     const depositWallets = await prisma.depositWallet.findMany({
       where: {
@@ -49,6 +66,13 @@ export async function POST(req: ExtendedNextRequest) {
 
     // Check if the transaction is a token transfer (BEP-20)
     const receipt = await web3.eth.getTransactionReceipt(transactionId);
+
+    if (!receipt) {
+      return NextResponse.json(
+        { error: "Transaction receipt not found!" },
+        { status: 404 }
+      );
+    }
 
     const transferEvent = receipt.logs.find(
       (log: any) =>
