@@ -84,6 +84,7 @@ export async function middleware(request: NextRequest, ev: NextFetchEvent) {
 
 // See "Matching Paths" below to learn more
 export const config = {
+  unstable_allowDynamic: ["/node_modules/**"],
   matcher: [
     "/api/user/profile",
     "/api/user/deposit",

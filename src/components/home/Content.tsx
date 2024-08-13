@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Button from "../universal/Button";
 
-import StockImg1 from "@/images/woman.png";
+import StockImg1 from "@/images/deposit.png";
 import CardGraphic from "@/images/card-graphic.min.svg";
 
 import Graphic0 from "@/images/content/graphic0.min.svg";
@@ -16,13 +16,12 @@ export default function Content() {
         <div className="px-2 sm:px-8 relative">
           <div className="[clip-path:polygon(100%_13%,100%_93%,93%_100%,0_100%,0_13%)] h-full -z-10 absolute w-[93%] bg-[#EBECE8]"></div>
           <Image
-            className="mx-auto mt-auto"
+            className="mx-auto mt-auto h-full object-cover border-4 border-white"
             src={StockImg1}
             width={StockImg1.width}
-            height={StockImg1.height}
             alt="woman"
           />
-          <Image
+          {/* <Image
             className="absolute left-0 top-[55%] hover:animate-shake"
             alt=""
             src={Graphic0}
@@ -41,19 +40,16 @@ export default function Content() {
             className="absolute right-0 lg:-right-[3%] top-[67%] sm:top-[57%] hover:animate-shake"
             alt=""
             src={Graphic3}
-          />
+          /> */}
         </div>
         <div className="flex flex-col pt-10 lg:pt-0 lg:justify-end pb-12 space-y-3 sm:space-y-7 lg:pl-5">
           <h2 className="uppercase text-sm sm:text-base md:text-lg !font-black text-primary">
             Our Feature
           </h2>
-          <h3 className="text-3xl sm:text-5xl font-bold">
-            All of your portfolios are linked to your Anytime P2P account
-          </h3>
+          <h3 className="text-3xl sm:text-5xl font-bold">Instant Deposit </h3>
           <p className="text-sm sm:text-lg !font-medium text-[#757095] ">
-            Why kept very ever home mrs. Considered sympathize ten uncommonly
-            occasional assistance sufficient not. Letter of on become he tended
-            active enable to.
+            You can deposit usdt in your platform wallet instantly. Secure and
+            reliable deposit. 24/7 support available.
           </p>
           <Button
             href="#"
@@ -79,12 +75,11 @@ export default function Content() {
             Our Feature
           </h2>
           <h3 className="text-3xl sm:text-5xl font-bold">
-            All payments can be managed from one account
+            Recieve INR in your Bank Account
           </h3>
           <p className="text-sm sm:text-lg !font-medium text-[#757095] ">
-            Why kept very ever home mrs. Considered sympathize ten uncommonly
-            occasional assistance sufficient not. Letter of on become he tended
-            active enable to.
+            Exchange your usdt to inr and recieve the amount in your bank
+            account.
           </p>
           <Button
             href="#"

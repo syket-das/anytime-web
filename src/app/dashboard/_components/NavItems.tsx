@@ -11,7 +11,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
-const NavItems = () => {
+const NavItems: React.FC = () => {
   const pathName = usePathname();
 
   return (
@@ -38,7 +38,7 @@ const NavItems = () => {
       </Link>
 
       <Link
-        href={""}
+        href={"/dashboard/transactions"}
         className="flex items-center gap-3 rounded-lg px-3 py-2 transition-all text-muted-foreground  "
       >
         <Settings2 className="h-4 w-4" />
