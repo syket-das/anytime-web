@@ -29,7 +29,7 @@ const PersonalWallet = () => {
       </CardHeader>
       <CardContent>
         <div className="flex  gap-2 w-full justify-center">
-          <p className="text-3xl  font-bold">{balance} </p>
+          <p className="text-3xl  font-bold">{balance?.toFixed(2)} </p>
           <p className="text-muted-foreground text-sm mt-auto font-bold">
             USDT
           </p>

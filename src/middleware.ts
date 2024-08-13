@@ -5,6 +5,8 @@ import type { NextFetchEvent, NextRequest } from "next/server";
 import { authOptions } from "./lib/auth";
 import { verifyJwt } from "./lib/jwt";
 
+const protectedRoutes = ["/dashboard", "/dashboard/*"];
+
 export async function middleware(request: NextRequest, ev: NextFetchEvent) {
   const requestForNextAuth = {
     headers: {
@@ -13,6 +15,13 @@ export async function middleware(request: NextRequest, ev: NextFetchEvent) {
   } as any;
 
   const session = await getSession({ req: requestForNextAuth });
+
+  // handle protected routes in client side
+  if (protectedRoutes.some((route) => request.url.includes(route))) {
+    if (!session) {
+      return NextResponse.redirect(new URL("/", request.url));
+    }
+  }
 
   if (session?.user?.id) {
     const requestHeaders = new Headers(request.headers);
@@ -84,5 +93,7 @@ export const config = {
     "/api/user/balance",
     "/api/user/exchange",
     "/api/user/transaction",
+    "/dashboard",
+    "/dashboard/:slug*",
   ],
 };

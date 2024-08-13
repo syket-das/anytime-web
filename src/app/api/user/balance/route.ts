@@ -36,7 +36,8 @@ export async function GET(req: ExtendedNextRequest) {
     );
 
     const successfullExchanges = userExchanges.filter(
-      (exchange) => exchange.status === STATUS.SUCCESS
+      (exchange) =>
+        exchange.status === STATUS.SUCCESS || exchange.status === STATUS.PENDING
     );
 
     const successfullWithdraws = userWithdraws.filter(

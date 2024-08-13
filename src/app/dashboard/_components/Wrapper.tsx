@@ -67,15 +67,14 @@ export function Wrapper({ children }: { children: React.ReactNode }) {
               <div className="mt-auto">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Upgrade to Pro</CardTitle>
+                    <CardTitle>Refer & Earn</CardTitle>
                     <CardDescription>
-                      Unlock all features and get unlimited access to our
-                      support team.
+                      Invite your friends and earn rewards
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <Button size="sm" className="w-full">
-                      Upgrade
+                      Invite Now
                     </Button>
                   </CardContent>
                 </Card>

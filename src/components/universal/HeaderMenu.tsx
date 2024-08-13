@@ -6,12 +6,26 @@ import Link from "next/link";
 
 import Times from "@/images/times-x.min.svg";
 import Button from "./Button";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { FcGoogle } from "react-icons/fc";
 
 const HeaderMenu = ({ onClose }: { onClose: () => void }) => {
+  const { data: session, status } = useSession();
+
   const [subMenu, setSubMenu] = useState({
     product: false,
     template: false,
   });
+
+  const handleSignIn = () => {
+    signIn("google", {
+      redirect: false,
+    });
+  };
+
+  const handleSignOut = () => {
+    signOut();
+  };
 
   return (
     <nav
@@ -25,73 +39,35 @@ const HeaderMenu = ({ onClose }: { onClose: () => void }) => {
         <Image src={Times} width={20} height={20} alt="" />
       </button>
       <ul className="mt-20 flex flex-col gap-y-8 text-white text-xl text-center justify-center items-center">
-        <li
-          className="h-full flex flex-col justify-center"
-          onClick={() => setSubMenu({ ...subMenu, product: !subMenu.product })}
-        >
-          <span>
-            Product <ChevronDown className="w-2 h-2 inline ml-2 mb-[2px]" />
-          </span>
-          <div
-            className={`bg-white ${
-              subMenu.product ? "h-[13.125rem]" : "h-0"
-            } transition-[height_0.3s] overflow-hidden`}
-          >
-            <ul className="flex flex-col">
-              {[...Array(5)].map((_, i) => (
-                <li
-                  className="text-gray-800 hover:bg-gray-100 transition-colors whitespace-nowrap w-[15.5rem] text-base"
-                  key={i}
-                >
-                  <Link className="py-2 px-4 block" href="#">
-                    Product Item {i + 1}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+        <li className="group h-full flex flex-col justify-center">
+          <Link href="/">Home</Link>
+        </li>
+        <li className="group h-full flex flex-col justify-center">
+          <Link href="/about">About</Link>
+        </li>
+        <li>
+          <Link href="/blog">Blog</Link>
+        </li>
+        <li>
+          <Link href="#">Help Center</Link>
+        </li>
+        <li>
+          <div className="w-full">
+            {!session?.user?.id ? (
+              <Button
+                onClick={session ? handleSignOut : handleSignIn}
+                href="#"
+                bgColor="orange"
+                className="h-[3rem] w-full"
+              >
+                Join Now <FcGoogle size={24} className="ml-2" />
+              </Button>
+            ) : (
+              <Button href="/dashboard" bgColor="primary" className="h-[3rem]">
+                {"Dashboard"}
+              </Button>
+            )}
           </div>
-        </li>
-        <li
-          className="h-full flex flex-col justify-center"
-          onClick={() =>
-            setSubMenu({ ...subMenu, template: !subMenu.template })
-          }
-        >
-          <span>
-            Template <ChevronDown className="w-2 h-2 inline ml-2 mb-[2px]" />
-          </span>
-          <div
-            className={`bg-white ${
-              subMenu.template ? "h-[7.875rem]" : "h-0"
-            } transition-[height_0.3s] overflow-hidden`}
-          >
-            <ul className="flex flex-col">
-              {[...Array(3)].map((_, i) => (
-                <li
-                  className="text-gray-800 hover:bg-gray-100 transition-colors whitespace-nowrap w-[15.5rem] text-base"
-                  key={i}
-                >
-                  <Link className="py-2 px-4 block" href="#">
-                    Template Item {i + 1}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </li>
-        <li>
-          <Link href="#">Blog</Link>
-        </li>
-        <li>
-          <Link href="#">Pricing</Link>
-        </li>
-        <li>
-          <Link href="#">Sign In</Link>
-        </li>
-        <li>
-          <Button href="#" bgColor="orange" rounded="rounded-lg">
-            Start Free
-          </Button>
         </li>
       </ul>
     </nav>

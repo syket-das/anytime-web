@@ -2,6 +2,7 @@
 
 import { SVGAttributes, useState, Suspense, lazy } from "react";
 import Link from "next/link";
+import { FcGoogle } from "react-icons/fc";
 
 import useScrollPosition from "@/hooks/useScrollPosition";
 import Button from "./Button";
@@ -50,50 +51,16 @@ export default function Header() {
           >
             <ul className="flex justify-center items-center gap-x-6 lg:gap-x-8 text-white text-sm h-full">
               <li className="group h-full flex flex-col justify-center">
-                <Link href="#">
-                  Product{" "}
-                  <ChevronDown className="w-2 h-2 inline ml-2 mb-[2px]" />
-                </Link>
-                <div className="bg-white hidden group-hover:block absolute top-[3.25rem] shadow-[0_8px_20px_rgb(50_12_192_/_20%)]">
-                  <ul className="flex flex-col">
-                    {[...Array(5)].map((_, i) => (
-                      <li
-                        className="text-gray-800 hover:bg-gray-100 transition-colors whitespace-nowrap w-[15.5rem]"
-                        key={i}
-                      >
-                        <Link className="py-2 px-4 block" href="#">
-                          Product Item {i + 1}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                <Link href="/">Home</Link>
               </li>
               <li className="group h-full flex flex-col justify-center">
-                <Link href="#">
-                  Template{" "}
-                  <ChevronDown className="w-2 h-2 inline ml-2 mb-[2px]" />
-                </Link>
-                <div className="bg-white hidden group-hover:block absolute top-[3.25rem] shadow-[0_8px_20px_rgb(50_12_192_/_20%)]">
-                  <ul className="flex flex-col">
-                    {[...Array(3)].map((_, i) => (
-                      <li
-                        className="text-gray-800 hover:bg-gray-100 transition-colors whitespace-nowrap w-[15.5rem]"
-                        key={i}
-                      >
-                        <Link className="py-2 px-4 block" href="#">
-                          Template Item {i + 1}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                <Link href="/about">About</Link>
               </li>
               <li>
-                <Link href="#">Blog</Link>
+                <Link href="/blog">Blog</Link>
               </li>
               <li>
-                <Link href="#">Pricing</Link>
+                <Link href="#">Help Center</Link>
               </li>
             </ul>
           </nav>
@@ -104,16 +71,16 @@ export default function Header() {
                 href="#"
                 bgColor="orange"
                 rounded={isSticky ? "rounded-0" : "rounded-lg"}
-                className="h-[3.25rem]"
+                className="h-[3rem]"
               >
-                {"Sign In"}
+                Join Now <FcGoogle size={24} className="ml-2" />
               </Button>
             ) : (
               <Button
                 href="/dashboard"
                 bgColor="primary"
                 rounded={isSticky ? "rounded-0" : "rounded-lg"}
-                className="h-[3.25rem]"
+                className="h-[3rem]"
               >
                 {"Dashboard"}
               </Button>

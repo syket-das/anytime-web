@@ -42,17 +42,16 @@ const DashboardSidebar = () => {
           <NavItems />
         </div>
         <div className="mt-auto p-4">
-          <Card x-chunk="dashboard-02-chunk-0">
-            <CardHeader className="p-2 pt-0 md:p-4">
-              <CardTitle>Upgrade to Pro</CardTitle>
+          <Card>
+            <CardHeader>
+              <CardTitle>Refer & Earn</CardTitle>
               <CardDescription>
-                Unlock all features and get unlimited access to our support
-                team.
+                Invite your friends and earn rewards
               </CardDescription>
             </CardHeader>
-            <CardContent className="p-2 pt-0 md:p-4 md:pt-0">
+            <CardContent>
               <Button size="sm" className="w-full">
-                Upgrade
+                Copy Referral Link
               </Button>
             </CardContent>
           </Card>

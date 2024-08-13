@@ -110,15 +110,14 @@ export default function Hero() {
         </div>
         <article className="container text-center pt-28 md:pt-32 xl:pt-40">
           <h2 className="text-white !font-bold text-3xl sm:text-4xl lg:text-6xl">
-            Managing your crypto portfolio
+            Exchange Crypto USDT - INR
             <br />
             has never been easier
           </h2>
           <p className="text-white text-sm md:text-base lg:text-xl !font-light lg:tracking-[0] mt-8 px-10 lg:px-0">
-            End-to-end payments and financial management in a single solution.
-            Meet
+            We provide a platform that allows you to easily create a wallet and
             <br />
-            the right platform to help realize.
+            exchange your USDT to INR in a few simple steps
           </p>
           <div className="mt-10 md:mt-14 flex gap-3 sm:gap-8 md:gap-12 justify-center whitespace-nowrap origin-top scale-75 md:scale-100">
             <Button href="#" bgColor="orange" rounded="rounded-full">

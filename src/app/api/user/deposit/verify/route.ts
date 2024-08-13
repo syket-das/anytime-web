@@ -19,8 +19,6 @@ export async function POST(req: ExtendedNextRequest) {
     }
     const { transactionId } = await req.json();
 
-    console.log("transactionId", transactionId);
-
     // if (!transactionId || !isHexString32Bytes(transactionId)) {
     //   return NextResponse.json(
     //     { error: "Invalid transaction ID!" },
@@ -31,6 +29,18 @@ export async function POST(req: ExtendedNextRequest) {
     if (!transactionId || typeof transactionId !== "string") {
       return NextResponse.json(
         { error: "Please provide a transaction ID!" },
+        { status: 400 }
+      );
+    }
+
+    const transactionExist = await prisma.deposit.findUnique({
+      where: {
+        transactionId,
+      },
+    });
+    if (transactionExist) {
+      return NextResponse.json(
+        { error: "Transaction already exists!" },
         { status: 400 }
       );
     }
@@ -135,7 +145,7 @@ export async function POST(req: ExtendedNextRequest) {
       data: {
         userId,
         walletId: wallet.id,
-        amount: amountInUSDT,
+        amount: Number(amountInUSDT),
         transactionId,
         currency: CURRENCY.USDT,
         status: STATUS.SUCCESS,
