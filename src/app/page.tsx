@@ -7,6 +7,7 @@ import ValuePropositions from "@/components/home/ValuePropositions";
 import Blog from "@/components/home/Blog";
 import Header from "@/components/universal/Header";
 import Footer from "@/components/universal/Footer";
+import { auth } from "@/lib/auth";
 
 const title = "AnytimeP2P | Manage Crypto Portfolio";
 const description =
@@ -42,7 +43,10 @@ export const metadata = {
   },
 };
 
-export default function Home() {
+export default async function Home() {
+  const session = await auth();
+  console.log("session", session);
+
   return (
     <>
       <Header />

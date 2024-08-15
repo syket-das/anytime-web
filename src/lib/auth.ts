@@ -1,12 +1,27 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { getServerSession } from "next-auth";
+import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import { authConfig } from "./authConfig";
 import { createWallet } from "./createWallet";
 import { prisma } from "./db";
 
-// Configuration options for authentication
-export const authOptions = {
-  // Callback to modify the session object
+export const { auth, handlers, signIn, signOut } = NextAuth({
+  adapter: PrismaAdapter(prisma),
+  ...authConfig,
+
+  session: {
+    strategy: "jwt",
+  },
+
+  secret: process.env.NEXTAUTH_SECRET,
+  // Authentication providers
+  providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      allowDangerousEmailAccountLinking: true,
+    }),
+  ],
   callbacks: {
     async session({
       session,
@@ -21,10 +36,7 @@ export const authOptions = {
         ...session,
         user: {
           ...session.user,
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          image: user.image,
+          id: token.id,
         },
       };
     },
@@ -83,18 +95,4 @@ export const authOptions = {
       return url.startsWith(baseUrl) ? url : baseUrl;
     },
   },
-
-  // Secret to encrypt cookies
-  secret: process.env.NEXTAUTH_SECRET || "default-secret",
-
-  // Prisma adapter to connect NextAuth.js with the database
-  adapter: PrismaAdapter(prisma),
-  // Authentication providers
-  providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-      allowDangerousEmailAccountLinking: true,
-    }),
-  ],
-};
+});
