@@ -51,6 +51,11 @@ const Page = () => {
         return;
       }
 
+      if (amount > balance) {
+        toast.error("Insufficient balance");
+        return;
+      }
+
       await exchange({
         fromAmount: amount,
         toAmount: amount
