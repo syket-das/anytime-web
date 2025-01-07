@@ -2,7 +2,6 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { authConfig } from "./authConfig";
-import { createWallet } from "./createWallet";
 import { prisma } from "./db";
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
@@ -50,25 +49,11 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         });
 
         if (!userExist) {
-          const { address, privateKey } = await createWallet();
-
           const newUser = await prisma.user.create({
             data: {
               email: user.email,
               name: user.name,
               image: user.image,
-            },
-          });
-
-          if (!address || !privateKey || !newUser) {
-            return false;
-          }
-          await prisma.depositWallet.create({
-            data: {
-              address,
-              privateKey,
-              publicKey: address,
-              userId: newUser.id,
             },
           });
 

@@ -1,4 +1,3 @@
-import { createWallet } from "@/lib/createWallet";
 import { prisma } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 import { signJwt } from "@/lib/jwt";
@@ -39,20 +38,11 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ user: userExists, token });
     }
 
-    const { address, privateKey } = await createWallet();
-
     const user = await prisma.user.create({
       data: {
         image: u.user_metadata.avatar_url || "",
         email: u.email,
         name: u.user_metadata.full_name || u.email,
-        depositWallets: {
-          create: {
-            address: address,
-            privateKey: privateKey,
-            publicKey: address,
-          },
-        },
       },
     });
 
