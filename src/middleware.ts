@@ -5,8 +5,8 @@ import { authConfig } from "./lib/authConfig";
 const { auth } = NextAuth(authConfig);
 
 // Define the public routes and default redirect paths
-const PUBLIC_ROUTES = ["/login", "/register", "/forgot-password"]; // Adjust as needed
-const ROOT = "/login"; // Redirect for unauthenticated users
+const PUBLIC_ROUTES = ["/"]; // Adjust as needed
+const ROOT = "/"; // Redirect for unauthenticated users
 const DEFAULT_REDIRECT = "/dashboard"; // Redirect for authenticated users
 
 export default auth((req) => {
