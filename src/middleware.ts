@@ -1,143 +1,37 @@
-import { NextRequest, NextResponse } from "next/server";
-// import { verifyJwt } from "./lib/jwt";
 import NextAuth from "next-auth";
+import { NextResponse } from "next/server";
 import { authConfig } from "./lib/authConfig";
 
-const protectedRoutes = ["/dashboard", "/dashboard/*"];
+const { auth } = NextAuth(authConfig);
 
-export const { auth } = NextAuth(authConfig);
+// Define the public routes and default redirect paths
+const PUBLIC_ROUTES = ["/login", "/register", "/forgot-password"]; // Adjust as needed
+const ROOT = "/login"; // Redirect for unauthenticated users
+const DEFAULT_REDIRECT = "/dashboard"; // Redirect for authenticated users
 
-// export default auth((request) => {
-//   const isAuth = request.auth;
+export default auth((req) => {
+  const { nextUrl } = req;
 
-//   console.log("isAuth", isAuth);
+  const isAuthenticated = !!req.auth;
+  const isPublicRoute = PUBLIC_ROUTES.includes(nextUrl.pathname);
 
-// // handle protected routes in client side
-// if (protectedRoutes.some((route) => request.url.includes(route))) {
-//   if (isAuth) {
-//     return NextResponse.redirect(new URL("/", request.url));
-//   }
-// }
-// if (isAuth?.user) {
-//   const requestHeaders = new Headers(request.headers);
-//   requestHeaders.set("userId", isAuth.user.id);
-//   const response = NextResponse.next({
-//     request: new Request(request, {
-//       headers: requestHeaders,
-//     }),
-//   });
-//   return response;
-// }
-// // const authToken = request.headers.get("Authorization");
-// // if (!authToken || !authToken.startsWith("Bearer ")) {
-// //   return NextResponse.json(
-// //     { error: "Failed to authenticate the request!" },
-// //     { status: 400 }
-// //   );
-// // }
-// // const token = authToken.split(" ")[1];
-// // try {
-// //   const {
-// //     error,
-// //     decoded,
-// //   }: {
-// //     error: any;
-// //     decoded: any;
-// //   } = await verifyJwt(token);
-// //   if (error) {
-// //     return NextResponse.json(
-// //       { error: "Failed to authenticate the request!" },
-// //       { status: 400 }
-// //     );
-// //   }
-// //   const requestHeaders = new Headers(request.headers);
-// //   requestHeaders.set("userId", decoded.id);
-// //   const response = NextResponse.next({
-// //     request: new Request(request, {
-// //       headers: requestHeaders,
-// //     }),
-// //   });
-// //   return response;
-// // } catch (error) {
-// //   console.error("Authentication error:", error);
-// //   return NextResponse.json(
-// //     { error: "Failed to authenticate the request!" },
-// //     { status: 400 }
-// //   );
-// // }
-// });
-
-// See "Matching Paths" below to learn more
-
-export default auth(async function middleware(request: NextRequest) {
-  const session = await auth();
-
-  // handle protected routes in client side
-  if (protectedRoutes.some((route) => request.url.includes(route))) {
-    if (!session) {
-      return NextResponse.redirect(new URL("/", request.url));
-    }
+  // Redirect authenticated users away from public routes
+  if (isPublicRoute && isAuthenticated) {
+    return NextResponse.redirect(new URL(DEFAULT_REDIRECT, nextUrl));
   }
-  if (session?.user) {
-    const requestHeaders = new Headers(request.headers);
-    requestHeaders.set("userId", session.user.id);
-    const response = NextResponse.next({
-      request: new Request(request, {
-        headers: requestHeaders,
-      }),
-    });
-    return response;
+
+  // Redirect unauthenticated users away from protected routes
+  if (!isAuthenticated && !isPublicRoute) {
+    return NextResponse.redirect(new URL(ROOT, nextUrl));
   }
-  // const authToken = request.headers.get("Authorization");
-  // if (!authToken || !authToken.startsWith("Bearer ")) {
-  //   return NextResponse.json(
-  //     { error: "Failed to authenticate the request!" },
-  //     { status: 400 }
-  //   );
-  // }
-  // const token = authToken.split(" ")[1];
-  // try {
-  //   const {
-  //     error,
-  //     decoded,
-  //   }: {
-  //     error: any;
-  //     decoded: any;
-  //   } = await verifyJwt(token);
-  //   if (error) {
-  //     return NextResponse.json(
-  //       { error: "Failed to authenticate the request!" },
-  //       { status: 400 }
-  //     );
-  //   }
-  //   const requestHeaders = new Headers(request.headers);
-  //   requestHeaders.set("userId", decoded.id);
-  //   const response = NextResponse.next({
-  //     request: new Request(request, {
-  //       headers: requestHeaders,
-  //     }),
-  //   });
-  //   return response;
-  // } catch (error) {
-  //   console.error("Authentication error:", error);
-  //   return NextResponse.json(
-  //     { error: "Failed to authenticate the request!" },
-  //     { status: 400 }
-  //   );
-  // }
+
+  // Allow request to proceed if no redirection is needed
+  return NextResponse.next();
 });
 
 export const config = {
   matcher: [
-    "/api/user/profile",
-    "/api/user/deposit",
-    "/api/user/deposit/verify",
-    "/api/user/userbank",
-    "/api/user/withdraw",
-    "/api/user/balance",
-    "/api/user/exchange",
-    "/api/user/transaction",
-    "/dashboard",
-    "/dashboard/:slug*",
+    // Match all routes except API, static assets, and favicon
+    "/((?!api|_next/static|_next/image|favicon.ico).*)",
   ],
 };

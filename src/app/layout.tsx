@@ -15,7 +15,7 @@ const manrope = Manrope({
 
 export default function RootLayout({ children }: IProps) {
   return (
-    <html lang="en" className={manrope.variable}>
+    <html lang="en" className={manrope.variable} suppressHydrationWarning>
       <head />
       <AuthProvider>
         <TooltipProvider>

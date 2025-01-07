@@ -1,14 +1,13 @@
+import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/db";
-import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-import { ExtendedNextRequest } from "types";
 
-export async function GET(req: ExtendedNextRequest) {
+export async function GET(req: NextRequest) {
   try {
-    const headersList = headers();
-    const userId = headersList.get("userId");
+    const session = await auth();
+    const userId = session?.user?.id;
 
-    if (!userId) {
+    if (!session?.user?.id) {
       return NextResponse.json({ error: "User not found!" }, { status: 404 });
     }
     const userWithdrawls = await prisma.withdrawal.findMany({

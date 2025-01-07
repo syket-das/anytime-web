@@ -1,11 +1,11 @@
 import { prisma } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
-import { headers } from "next/headers";
+import { auth } from "@/lib/auth";
 
 export async function GET(req: NextRequest) {
   try {
-    const headersList = headers();
-    const userId = headersList.get("userId");
+    const session = await auth();
+    const userId = session?.user?.id;
 
     if (!userId) {
       return NextResponse.json({ error: "User not found!" }, { status: 404 });

@@ -1,7 +1,7 @@
 // @ts-nocheck
+import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { CURRENCY, STATUS } from "@prisma/client";
-import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { ExtendedNextRequest } from "types";
 import Web3 from "web3";
@@ -11,8 +11,8 @@ const web3 = new Web3("https://bsc-dataseed.binance.org/"); // Use appropriate p
 
 export async function POST(req: ExtendedNextRequest) {
   try {
-    const headersList = headers();
-    const userId = headersList.get("userId");
+    const session = await auth();
+    const userId = session?.user?.id;
 
     if (!userId) {
       return NextResponse.json({ error: "User not found!" }, { status: 404 });

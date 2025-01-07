@@ -23,16 +23,24 @@ import { format } from "date-fns";
 export default function ExchangeRate() {
   const { rates, lastRate, getRates, loading }: any = useRate((state) => state);
 
+  const fetch = async () => {
+    try {
+      await getRates();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
-    getRates();
+    fetch();
   }, []);
 
   return (
-    <Card className="flex flex-col h-full relative">
+    <Card className="flex flex-col h-full relative w-full">
       <CardHeader>
         <CardTitle>Today{`'s`} Exchange Rate</CardTitle>
         <CardDescription className="text-2xl">
-          {loading ? "..." : lastRate ? lastRate.rate : "N/A"}
+          {loading ? "..." : lastRate ? `${lastRate.rate} INR = 1 BDT` : "N/A"}
         </CardDescription>
       </CardHeader>
 
@@ -49,7 +57,7 @@ export default function ExchangeRate() {
         />
       </Button>
 
-      <CardContent className="flex flex-1 items-center">
+      <CardContent className="h-52 w-full">
         <ChartContainer
           config={{
             resting: {

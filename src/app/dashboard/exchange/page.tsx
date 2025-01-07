@@ -2,6 +2,7 @@
 import {
   Clipboard,
   CreditCard,
+  Info,
   OctagonX,
   RefreshCcw,
   RocketIcon,
@@ -92,7 +93,7 @@ const Page = () => {
               {loading ? "..." : lastRate ? lastRate.rate : "N/A"}
             </p>
             <p className="text-sm font-extrabold mt-4 ">
-              1 USDT = {loading ? "..." : lastRate ? lastRate.rate : "N/A"} INR
+              1 BDT = {loading ? "..." : lastRate ? lastRate.rate : "N/A"} INR
             </p>
 
             <div className=""></div>
@@ -138,14 +139,13 @@ const Page = () => {
         x-chunk="dashboard-03-chunk-0"
       >
         <Alert variant="destructive" className="my-4">
-          <OctagonX className="h-4 w-4" />
+          <Info className="h-4 w-4" />
           <AlertTitle>
-            Convinience Fee might be charged for the transaction
+            Please verify the amount and bank account before proceeding
           </AlertTitle>
           <AlertDescription>
-            Depending on the bank and the amount, a convinience fee might be
-            charged for the transaction to be processed. It will be deducted
-            from the amount you receive.
+            Please contact immediately if you have entered the wrong amount or
+            bank account
           </AlertDescription>
         </Alert>
         <div className="grid w-full items-start gap-6">
@@ -184,7 +184,7 @@ const Page = () => {
                 variant="default"
                 className="w-full"
               >
-                Verify
+                <RocketIcon className="h-6 w-6 mr-4" /> Exchange
               </Button>
             </div>
           </fieldset>

@@ -18,12 +18,13 @@ import { Button } from "@/components/ui/button";
 import { useRate } from "@/store/rateStore";
 import { format, set } from "date-fns";
 import { useRouter } from "next/navigation";
+import { Label } from "@/components/ui/label";
 
 export default function ExchangeCalculator() {
   const router = useRouter();
   const { rates, lastRate, getRates, loading }: any = useRate((state) => state);
   const [inr, setInr] = useState(0);
-  const [usdt, setUsdt] = useState(0);
+  const [bdt, setBDT] = useState(0);
 
   if (loading || !lastRate) return <Card className=" h-full">Loading...</Card>;
 
@@ -34,26 +35,33 @@ export default function ExchangeCalculator() {
         <CardDescription>Calculate your exchanges here</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col items-baseline gap-4 p-4 pt-0 ">
-        <div className="flex flex-col md:flex-row items-center justify-between  my-4 w-full gap-4 flex-1">
-          <Input
-            value={inr}
-            onChange={(e) => {
-              setInr(e.target.value as any);
-              setUsdt((e.target.value as any) / lastRate.rate);
-            }}
-            placeholder="INR"
-            className="w-full"
-          />
+        <div className="flex flex-col md:flex-row items-end justify-between  my-4 w-full gap-4 flex-1">
+          <div className="flex-1">
+            <Label>INR</Label>
+            <Input
+              value={inr}
+              onChange={(e) => {
+                setInr(e.target.value as any);
+                setBDT((e.target.value as any) / lastRate.rate);
+              }}
+              placeholder="INR"
+              className="w-full"
+            />
+          </div>
           <ArrowLeftRight className="h-8 w-8 mx-auto" />
-          <Input
-            value={usdt}
-            onChange={(e) => {
-              setUsdt(e.target.value as any);
-              setInr((e.target.value as any) * lastRate.rate);
-            }}
-            placeholder="USDT"
-            className="w-full"
-          />
+          <div className="flex-1">
+            <Label>BDT</Label>
+
+            <Input
+              value={bdt}
+              onChange={(e) => {
+                setBDT(e.target.value as any);
+                setInr((e.target.value as any) * lastRate.rate);
+              }}
+              placeholder="BDT"
+              className="w-full"
+            />
+          </div>
         </div>
 
         <div className="my-2 flex justify-center gap-4 items-center w-full">
@@ -92,7 +100,7 @@ export default function ExchangeCalculator() {
           <div className="flex items-baseline gap-1 text-3xl font-bold tabular-nums leading-none">
             {lastRate?.rate}
             <span className="text-sm font-normal text-muted-foreground">
-              INR = 1 USDT
+              INR = 1 bdt
             </span>
           </div>
           <ChartContainer

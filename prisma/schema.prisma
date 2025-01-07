@@ -24,6 +24,7 @@ enum STATUS {
 enum CURRENCY {
   USDT
   INR
+  BDT
 }
 
 model Account {
@@ -75,6 +76,34 @@ model DepositWallet {
   updatedAt DateTime?
 }
 
+enum AdminBankType {
+  BKASH
+  NAGAD
+  ROCKET
+  DBBL
+  BRAC
+  CITY
+  EBL
+  UCBL
+  SCB
+  HSBC
+  IBBL
+  MTB
+}
+
+model AdminBank {
+  id          String        @id @default(uuid()) @map("_id")
+  type        AdminBankType
+  accountNo   String
+  accountName String?
+  branch      String?
+
+  fullDetails String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime?
+  deposits    Deposit[]
+}
+
 model UserBank {
   id          String     @id @default(uuid()) @map("_id")
   userId      String
@@ -101,18 +130,28 @@ model ExchangeRate {
   updatedAt DateTime?
 }
 
+type Media {
+  key       String
+  url       String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
+}
+
 model Deposit {
-  id            String        @id @default(uuid()) @map("_id")
+  id            String         @id @default(uuid()) @map("_id")
   userId        String
-  walletId      String
+  walletId      String?
   amount        Float
-  convienceFee  Float         @default(0)
+  convienceFee  Float          @default(0)
   currency      CURRENCY
   status        STATUS
-  transactionId String        @unique
+  transactionId String         @unique
   remark        String?
-  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  wallet        DepositWallet @relation(fields: [walletId], references: [id])
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  wallet        DepositWallet? @relation(fields: [walletId], references: [id])
+  adminBank     AdminBank?     @relation(fields: [adminBankId], references: [id])
+  adminBankId   String?
+  media         Media?
 
   createdAt DateTime  @default(now())
   updatedAt DateTime?

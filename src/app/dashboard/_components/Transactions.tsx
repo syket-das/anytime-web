@@ -47,8 +47,16 @@ const Transactions = () => {
     (state) => state
   );
 
+  const fetch = async () => {
+    try {
+      await getTransactions();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    getTransactions();
+    fetch();
   }, []);
 
   return (
@@ -99,6 +107,8 @@ const Transactions = () => {
                   <TableHead className="hidden sm:table-cell">Status</TableHead>
                   <TableHead className="hidden md:table-cell">Date</TableHead>
                   <TableHead className="">Amount</TableHead>
+                  <TableHead className="">Charges</TableHead>
+                  <TableHead className="">Net Amount</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -117,11 +127,26 @@ const Transactions = () => {
                       {formatDate(transaction.createdAt, "dd/MM/yyyy")}
                     </TableCell>
                     <TableCell className="">
-                      ₮{" "}
-                      {transaction.type === "EXCHANGE"
-                        ? transaction.fromAmount
-                        : transaction.amount}
+                      {transaction?.currency}{" "}
+                      <span className="font-bold">
+                        {transaction.type === "EXCHANGE"
+                          ? transaction.fromAmount
+                          : transaction.amount}
+                      </span>
                     </TableCell>
+                    <TableCell className="hidden md:table-cell">
+                      {transaction?.convienceFee}
+                    </TableCell>
+
+                    <TableCell className="">
+                      {transaction?.currency}{" "}
+                      <span className="font-bold">
+                        {transaction.type === "EXCHANGE"
+                          ? transaction.fromAmount - transaction?.convienceFee
+                          : transaction.amount - transaction?.convienceFee}
+                      </span>
+                    </TableCell>
+
                     <TableCell className="">
                       <Dialog>
                         <DialogTrigger>
