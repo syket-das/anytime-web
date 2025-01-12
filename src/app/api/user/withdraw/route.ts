@@ -62,7 +62,7 @@ export async function POST(req: ExtendedNextRequest) {
         userId,
         walletAddress,
         status: STATUS.PENDING,
-        currency: CURRENCY.USDT,
+        currency: CURRENCY.BDT,
         amount: parseFloat(amount),
       },
     });

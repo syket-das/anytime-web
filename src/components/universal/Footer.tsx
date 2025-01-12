@@ -7,7 +7,7 @@ export default function Footer() {
       <section className="container mb-24 text-center">
         <h2 className="text-3xl md:text-5xl !font-normal leading-[3.6rem] md:leading-[4.5rem] !tracking-normal">
           Join millions of <br />
-          creative people with Anytime P2P
+          creative people with BDPayX
         </h2>
         <Button
           className="mt-6 text-[#121313] font-extrabold"
@@ -24,9 +24,7 @@ export default function Footer() {
         className="container flex flex-col md:flex-row justify-between gap-x-10 gap-y-20 md:gap-y-0 text-center md:text-left pt-10 pb-28"
       >
         <article className="basis-[45%]">
-          <h3 className="text-xl uppercase font-bold tracking-wide">
-            Anytime P2P
-          </h3>
+          <h3 className="text-xl uppercase font-bold tracking-wide">BDPayX</h3>
           <p className=" text-base mt-9 max-w-lg tracking-wide">
             Yet bed any for traveling assistance indulgence unpleasing. Not
             thoughts all exercise blessing. Indulgence way everything joy
@@ -118,8 +116,7 @@ export default function Footer() {
       <hr className="bg-[#404444] h-[0.0625rem] border-none" />
       <section className="container py-10 flex flex-col lg:flex-row text-center justify-between">
         <p className="text-xs tracking-wide">
-          &copy; {new Date().getFullYear()} Anytime P2P. All rights reserved.
-          &mdash;{" "}
+          &copy; {new Date().getFullYear()} BDPayX. All rights reserved. &mdash;{" "}
           <Link href="/" className="hover:underline">
             Privacy Policy
           </Link>{" "}

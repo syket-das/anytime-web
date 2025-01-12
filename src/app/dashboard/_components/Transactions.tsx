@@ -127,7 +127,13 @@ const Transactions = () => {
                       {formatDate(transaction.createdAt, "dd/MM/yyyy")}
                     </TableCell>
                     <TableCell className="">
-                      {transaction?.currency}{" "}
+                      {
+                        <span className="font-bold">
+                          {transaction.type === "EXCHANGE"
+                            ? transaction.from
+                            : transaction.currency}{" "}
+                        </span>
+                      }{" "}
                       <span className="font-bold">
                         {transaction.type === "EXCHANGE"
                           ? transaction.fromAmount
@@ -139,10 +145,17 @@ const Transactions = () => {
                     </TableCell>
 
                     <TableCell className="">
-                      {transaction?.currency}{" "}
+                      {
+                        <span className="font-bold">
+                          {transaction.type === "EXCHANGE"
+                            ? transaction.to
+                            : transaction.currency}{" "}
+                        </span>
+                      }{" "}
                       <span className="font-bold">
                         {transaction.type === "EXCHANGE"
-                          ? transaction.fromAmount - transaction?.convienceFee
+                          ? Number(transaction.toAmount) -
+                            transaction?.convienceFee
                           : transaction.amount - transaction?.convienceFee}
                       </span>
                     </TableCell>
@@ -161,8 +174,18 @@ const Transactions = () => {
                               All the details of the transaction
                             </DialogDescription>
                           </DialogHeader>
-                          <div className="">
-                            <pre className=" p-4 bg-gray-100 rounded-md">
+                          <div className="overflow-auto">
+                            {transaction?.media && (
+                              <div className="flex justify-center">
+                                <img
+                                  src={transaction?.media?.url}
+                                  alt="transaction media"
+                                  className="h-[300px] w-[300px] object-fill"
+                                />
+                              </div>
+                            )}
+
+                            <pre className=" p-4  rounded-md break-before-all min-w-full">
                               {JSON.stringify(transaction, undefined, 2)}
                             </pre>
                           </div>

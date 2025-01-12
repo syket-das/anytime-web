@@ -1,7 +1,7 @@
 export default function Head() {
   return (
     <>
-      <title>Anytime P2p | Manage Crypto Portfolio</title>
+      <title>BDPayX | Manage Crypto Portfolio</title>
       <meta content="width=device-width, initial-scale=1" name="viewport" />
       <meta
         name="description"

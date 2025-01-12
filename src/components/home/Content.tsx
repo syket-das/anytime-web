@@ -48,7 +48,7 @@ export default function Content() {
           </h2>
           <h3 className="text-3xl sm:text-5xl font-bold">Instant Deposit </h3>
           <p className="text-sm sm:text-lg !font-medium text-[#757095] ">
-            You can deposit usdt in your platform wallet instantly. Secure and
+            You can deposit bdt in your platform wallet instantly. Secure and
             reliable deposit. 24/7 support available.
           </p>
           <Button
@@ -78,7 +78,7 @@ export default function Content() {
             Recieve INR in your Bank Account
           </h3>
           <p className="text-sm sm:text-lg !font-medium text-[#757095] ">
-            Exchange your usdt to inr and recieve the amount in your bank
+            Exchange your bdt to inr and recieve the amount in your bank
             account.
           </p>
           <Button

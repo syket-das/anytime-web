@@ -54,7 +54,7 @@ export async function POST(req: ExtendedNextRequest) {
         fromAmount: parseFloat(fromAmount),
         toAmount: parseFloat(toAmount),
         userBankId: userBankId,
-        from: CURRENCY.USDT,
+        from: CURRENCY.BDT,
         to: CURRENCY.INR,
         status: STATUS.PENDING,
         rateId: rateId,

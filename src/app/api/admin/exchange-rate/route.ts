@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
 
     const exchangeRate = await prisma.exchangeRate.create({
       data: {
-        from: CURRENCY.USDT,
+        from: CURRENCY.BDT,
         to: CURRENCY.INR,
         rate: parseFloat(rate),
       },

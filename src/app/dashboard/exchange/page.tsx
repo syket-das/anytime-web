@@ -159,11 +159,11 @@ const Page = () => {
                 {amount ? calculateInrAmountFromUsdt(amount, lastRate.rate) : 0}{" "}
                 INR
               </p>
-              <Label htmlFor="hash">Amount (USDT)</Label>
+              <Label htmlFor="hash">Amount (BDT)</Label>
 
               <Input
                 id="hash"
-                placeholder="Enter the amount in usdt"
+                placeholder="Enter the amount in bdt"
                 onChange={(e) => setAmount(Number(e.target.value))}
                 value={String(amount)}
                 type="number"

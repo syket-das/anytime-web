@@ -35,6 +35,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import DashboardSidebar from "./DashboardSidebar";
 import NavItems from "./NavItems";
 import { signOut, useSession } from "next-auth/react";
+import { FloatingWhatsApp } from "@carlos8a/react-whatsapp-floating-button";
 
 export function Wrapper({ children }: { children: React.ReactNode }) {
   const { data: session, status } = useSession();
@@ -61,7 +62,7 @@ export function Wrapper({ children }: { children: React.ReactNode }) {
                 className="flex items-center gap-2 text-lg font-semibold"
               >
                 <Package2 className="h-6 w-6" />
-                <span className="">Anytime P2P</span>
+                <span className="">BDPayX</span>
               </Link>
               <NavItems />
               <div className="mt-auto">
@@ -123,6 +124,18 @@ export function Wrapper({ children }: { children: React.ReactNode }) {
           {children}
         </main>
       </div>
+      <FloatingWhatsApp
+        phoneNumber="5215540000000" // Required
+        accountName="Carlos Ochoa" // Optional
+        avatar="https://avatar.iran.liara.run/public" // Optional
+        initialMessageByServer="Hi there! How can I assist you?" // Optional
+        initialMessageByClient="Hello! I found your contact on your website. I would like to chat with you about..." // Optional
+        statusMessage="Available" // Optional
+        startChatText="Start chat with us" // Optional
+        tooltipText="Need help? Click to chat!" // Optional
+        allowEsc={true} // Optional
+        // Explore all available props below
+      />
     </div>
   );
 }

@@ -41,7 +41,7 @@ export default function Related() {
   return (
     <section className="px-3 max-w-[98rem] mx-auto md:px-10 text-center mt-14 md:mt-[4.75rem]">
       <h2 className="text-sm sm:text-lg md:text-2xl !font-semibold">
-        Over 32k+ software businesses growing with Anytime P2P.
+        Over 32k+ software businesses growing with BDPayX.
       </h2>
       <div
         ref={containerRef}
