@@ -125,8 +125,8 @@ export function Wrapper({ children }: { children: React.ReactNode }) {
         </main>
       </div>
       <FloatingWhatsApp
-        phoneNumber="5215540000000" // Required
-        accountName="Carlos Ochoa" // Optional
+        phoneNumber="+9189683 87817" // Required
+        accountName="BDPayX Support" // Optional
         avatar="https://avatar.iran.liara.run/public" // Optional
         initialMessageByServer="Hi there! How can I assist you?" // Optional
         initialMessageByClient="Hello! I found your contact on your website. I would like to chat with you about..." // Optional
