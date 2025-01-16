@@ -88,7 +88,7 @@ export function Wrapper({ children }: { children: React.ReactNode }) {
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                 <Input
                   type="search"
-                  placeholder="Search products..."
+                  placeholder="Search for anything"
                   className="w-full appearance-none bg-background pl-8 shadow-none md:w-2/3 lg:w-1/3"
                 />
               </div>
@@ -125,7 +125,7 @@ export function Wrapper({ children }: { children: React.ReactNode }) {
         </main>
       </div>
       <FloatingWhatsApp
-        phoneNumber="+9189683 87817" // Required
+        phoneNumber="+917009926268" // Required
         accountName="BDPayX Support" // Optional
         avatar="https://avatar.iran.liara.run/public" // Optional
         initialMessageByServer="Hi there! How can I assist you?" // Optional

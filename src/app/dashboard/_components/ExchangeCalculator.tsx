@@ -29,13 +29,13 @@ export default function ExchangeCalculator() {
   if (loading || !lastRate) return <Card className=" h-full">Loading...</Card>;
 
   return (
-    <Card className=" h-full">
+    <Card className="w-full h-full">
       <CardHeader className="p-4 pb-0">
         <CardTitle>Exchnage Calculator</CardTitle>
         <CardDescription>Calculate your exchanges here</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col items-baseline gap-4 p-4 pt-0 ">
-        <div className="flex flex-col md:flex-row items-end justify-between  my-4 w-full gap-4 flex-1">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between  my-4 w-full gap-4 ">
           <div className="flex-1">
             <Label>INR</Label>
             <Input
@@ -45,7 +45,7 @@ export default function ExchangeCalculator() {
                 setBDT((e.target.value as any) / lastRate.rate);
               }}
               placeholder="INR"
-              className="w-full"
+              className="w-full flex-1"
             />
           </div>
           <ArrowLeftRight className="h-8 w-8 mx-auto" />
@@ -64,7 +64,7 @@ export default function ExchangeCalculator() {
           </div>
         </div>
 
-        <div className="my-2 flex justify-center gap-4 items-center w-full">
+        <div className="my-2 flex justify-center gap-4 items-center w-full flex-wrap">
           <Button
             variant="default"
             size="default"
