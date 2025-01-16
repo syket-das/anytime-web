@@ -58,6 +58,7 @@ model User {
   banks          UserBank[]
   withdrawals    Withdrawal[]
   exchanges      Exchange[]
+  isVerified     Boolean         @default(false)
 
   createdAt DateTime  @default(now())
   updatedAt DateTime?
@@ -92,8 +93,8 @@ enum AdminBankType {
 }
 
 model AdminBank {
-  id          String        @id @default(uuid()) @map("_id")
-  type        AdminBankType
+  id          String  @id @default(uuid()) @map("_id")
+  type        String
   accountNo   String
   accountName String?
   branch      String?
