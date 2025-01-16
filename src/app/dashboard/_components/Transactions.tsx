@@ -69,33 +69,6 @@ const Transactions = () => {
             <TabsTrigger value="withdraws">Withdraws</TabsTrigger>
             <TabsTrigger value="exchanges">Exchanges</TabsTrigger>
           </TabsList>
-          <div className="ml-auto flex items-center gap-2">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="h-7 gap-1 text-sm"
-                >
-                  <ListFilter className="h-3.5 w-3.5" />
-                  <span className="sr-only sm:not-sr-only">Filter</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel>Filter by</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuCheckboxItem checked>
-                  Fulfilled
-                </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem>Declined</DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem>Refunded</DropdownMenuCheckboxItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <Button size="sm" variant="outline" className="h-7 gap-1 text-sm">
-              <File className="h-3.5 w-3.5" />
-              <span className="sr-only sm:not-sr-only">Export</span>
-            </Button>
-          </div>
         </div>
         <TabsContent value="all">
           <Card x-chunk="dashboard-05-chunk-3">
@@ -174,7 +147,7 @@ const Transactions = () => {
                               <Expand className="h-4 w-4" />
                             </Button>
                           </DialogTrigger>
-                          <DialogContent className="max-w-2xl">
+                          <DialogContent className="max-w-[90vw] md:max-w-2xl max-h-[80vh] overflow-auto">
                             <DialogHeader>
                               <DialogTitle>Transaction Details</DialogTitle>
                               <DialogDescription>

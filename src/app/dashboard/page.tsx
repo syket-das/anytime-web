@@ -20,7 +20,7 @@ const Page = async () => {
           <PersonalWallet />
         </div>
       </div>
-      <div className="">
+      <div className="overflow-x-hidden">
         <Transactions />
       </div>
     </div>

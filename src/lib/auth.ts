@@ -36,6 +36,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         user: {
           ...session.user,
           id: token.id,
+          isVerified: token.isVerified,
         },
       };
     },
@@ -73,6 +74,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
 
       return {
         ...token,
+        isVerified: user?.isVerified,
       };
     },
 
